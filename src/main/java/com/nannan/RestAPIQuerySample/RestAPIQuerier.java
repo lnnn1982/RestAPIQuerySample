@@ -179,13 +179,31 @@ public class RestAPIQuerier
         JSONArray serviceInfoList = jsonObject.getJSONArray("serviceInfoList");
         for (int i = 0; i < serviceInfoList.length(); i++) {
         	JSONObject serviceObj = serviceInfoList.getJSONObject(i);
-        	String serviceType = serviceObj.getString("type");
+        	
+        	JSONObject serviceTypeObj = serviceObj.getJSONObject("svrTypeInfo");
+        	parseServiceTypeInfo(serviceTypeObj);
+        	
         	String area = serviceObj.getString("area");
         	String uploadFileNames = serviceObj.getString("uploadFileNames");
-        	
-        	System.out.println("serviceType:" + serviceType + ", area:" + area
-        			+ ", uploadFileNames:" + uploadFileNames);
+        	String description = serviceObj.getString("description");
+        	String priceRange = serviceObj.getString("priceRange");
+        	System.out.println("service info: area:" + area
+        			+ ", uploadFileNames:" + uploadFileNames + ", description:" + description
+        			+ ", priceRange:" + priceRange);
         }
+	}
+	
+	private void parseServiceTypeInfo(JSONObject jsonObject) {
+		String svrType = jsonObject.getString("svrType");
+		int svrTypeId = jsonObject.getInt("svrTypeId");
+		String svrTypeUploadFileNames = jsonObject.getString("svrTypeUploadFileNames");
+		String svrTypePrice = jsonObject.getString("svrTypePrice");
+		String occasion = jsonObject.getString("occasion");
+		
+		System.out.println("servicetype info: svrType:" + svrType
+    			+ ", svrTypeId:" + svrTypeId + ", svrTypeUploadFileNames:"
+    			+ svrTypeUploadFileNames + ", svrTypePrice:" +
+    			svrTypePrice + ", occasion:" + occasion);
 	}
 	
 	public void listAllServiceUsers() {
